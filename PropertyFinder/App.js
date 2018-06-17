@@ -16,20 +16,14 @@ import {
   StackNavigator,
 } from 'react-navigation';
 
-type Props = {};
-class SearchPage extends Component<{}> {
+import SearchPage from './SearchPage';
 
-  static navigationOptions = {
-  title: 'Property Finder',
-};
-  render() {
-    return <Text style={styles.description}>Search for houses to buy!</Text>;
-  }
-}
+type Props = {};
 
 const App = StackNavigator({
   Home: { screen: SearchPage },
 });
+export default App;
 
 const styles = StyleSheet.create({
   description: {
@@ -39,5 +33,3 @@ const styles = StyleSheet.create({
     marginTop: 65,
   },
 });
-
-export default App;
