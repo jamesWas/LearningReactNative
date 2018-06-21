@@ -16,6 +16,18 @@ export default class SearchPage extends Component<{}> {
     title: 'Property Finder',
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchString: 'london'
+    };
+  }
+  _onSearchTextChanged = (event) => {
+    console.log('_onSearchTextChanged');
+    this.setState({ searchString: event.nativeEvent.text });
+    console.log('Current: '+this.state.searchString+', Next: '+event.nativeEvent.text);
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -25,17 +37,19 @@ export default class SearchPage extends Component<{}> {
         <Text style={styles.description}>
           Search by place-name or postcode.
         </Text>
-        <View style={styles.flowRight}>
-          <TextInput
-            underlineColorAndroid={'transparent'}
-            style={styles.searchInput}
-            placeholder='Search via name or postcode'/>
-          <Button
-            onPress={() => {}}
-            color='#48BBEC'
-            title='Go'
-          />
-      </View>
+      <View style={styles.flowRight}>
+      <TextInput
+        underlineColorAndroid={'transparent'}
+        style={styles.searchInput}
+        value={this.state.searchString}
+        placeholder='Search via name or postcode'/>
+        <Button
+          onPress={() => {}}
+          color='#48BBEC'
+          title='Go'
+        />
+        </View>
+        <Image source={require('./Resources/house.png')} style={styles.image}/>
       </View>
     );
   }
@@ -68,5 +82,9 @@ const styles = StyleSheet.create({
     borderColor: '#48BBEC',
     borderRadius: 8,
     color: '#48BBEC',
+  },
+  image: {
+    width: 217,
+    height: 138,
   },
 });
