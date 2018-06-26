@@ -20,14 +20,14 @@ export default class SearchPage extends Component<{}> {
     super(props);
     this.state = {
       searchString: 'london',
-      isLoading: false
+      isLoading: false,
     };
   }
 
   render() {
     const spinner = this.state.isLoading ?
       <ActivityIndicator size='large'/> : null;
-      
+
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
@@ -44,7 +44,7 @@ export default class SearchPage extends Component<{}> {
         onChange = {this._onSearchTextChanged}
         placeholder='Search via name or postcode'/>
         <Button
-          onPress={() => {}}
+          onPress={this._onSearchPressed}
           color='#48BBEC'
           title='Go'
         />
@@ -54,6 +54,15 @@ export default class SearchPage extends Component<{}> {
       </View>
     );
   }
+  _handleResponse = (response) => {
+    this.setState({ isLoading: false , message: '' });
+    if (response.application_response_code.substr(0, 1) === '1') {
+      console.log('Properties found: ' + response.listings.length);
+    } else {
+      this.setState({ message: 'Location not recognized; please try again.'});
+    }
+  };
+
   _onSearchTextChanged = (event) => {
     this.setState({ searchString: event.nativeEvent.text });
   };
@@ -61,6 +70,15 @@ export default class SearchPage extends Component<{}> {
   _executeQuery = (query) => {
     console.log(query);
     this.setState({ isLoading: true });
+
+    fetch(query)
+      .then(response => response.json())
+      .then(json => this._handleResponse(json.response))
+      .catch(error =>
+         this.setState({
+          isLoading: false,
+          message: 'Something bad happened ' + error
+     }));
   };
 
   _onSearchPressed = () => {
