@@ -17,12 +17,15 @@ import {
 } from 'react-navigation';
 
 import SearchPage from './SearchPage';
+import SearchResults from './SearchResults';
 
 type Props = {};
 
 const App = StackNavigator({
   Home: { screen: SearchPage },
+  Results: { screen: SearchResults },
 });
+
 export default App;
 
 const styles = StyleSheet.create({
